@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Tables";
+    var token = ViewData["Token"] as string;
+}
+
+<h2>Available Tables</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Table ID</th>
+            <th>Number</th>
+            <th>Seats</th>
+            <th>Material</th>
+            <th>Location</th>
+            <th>Is Popular</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tableTable">
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const token = '@token';
+        const response = await fetch('/api/tables', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const tables = await response.json();
+        const tableTable = document.getElementById('tableTable');
+        tables.forEach(table => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                        <td>${table.id}</td>
+                        <td>${table.number}</td>
+                        <td>${table.seats}</td>
+                        <td>${table.material}</td>
+                        <td>${table.location}</td>
+                        <td>${table.isPopular ? 'Yes' : 'No'}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                `;
+            tableTable.appendChild(row);
+        });
+    });
+</script>

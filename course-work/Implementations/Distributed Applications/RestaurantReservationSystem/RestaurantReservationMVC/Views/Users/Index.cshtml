@@ -1,0 +1,48 @@
+﻿@model X.PagedList.IPagedList<RestaurantReservationMVC.Models.UserModel>
+@using X.PagedList.Mvc.Core;
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users</h2>
+<form method="get" asp-action="Index">
+    <label for="age">Filter by Age:</label>
+    <input type="number" id="age" name="age" min="0" />
+    <button type="submit">Filter</button>
+</form>
+@if (Model == null || !Model.Any())
+{
+    <p>No users available.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.Email</td>
+                    <td>@user.Age</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+}
+<a href="/Users/Create">Create New User</a>

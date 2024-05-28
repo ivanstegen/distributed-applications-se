@@ -1,0 +1,38 @@
+﻿@model RestaurantReservationMVC.Models.ReservationModel
+
+@{
+    ViewData["Title"] = "Edit Reservation";
+}
+
+<h2>Edit Reservation</h2>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="ReservationDate"></label>
+        <input asp-for="ReservationDate" />
+        <span asp-validation-for="ReservationDate"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NumberOfGuests"></label>
+        <input asp-for="NumberOfGuests" />
+        <span asp-validation-for="NumberOfGuests"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TableId"></label>
+        <input asp-for="TableId" />
+        <span asp-validation-for="TableId"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SpecialRequests"></label>
+        <input asp-for="SpecialRequests" />
+        <span asp-validation-for="SpecialRequests"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="VipGuests"></label>
+        <input asp-for="VipGuests" />
+        <span asp-validation-for="VipGuests"></span>
+    </div>
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

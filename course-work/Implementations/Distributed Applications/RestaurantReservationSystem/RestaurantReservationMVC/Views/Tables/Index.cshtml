@@ -1,0 +1,51 @@
+﻿@model X.PagedList.IPagedList<RestaurantReservationMVC.Models.TableModel>
+@using X.PagedList.Mvc.Core;
+
+@{
+    ViewData["Title"] = "Tables";
+}
+
+<h2>Tables</h2>
+<form method="get" asp-action="Index">
+    <label for="seats">Filter by Seats::</label>
+    <input type="number" id="Seats" name="seats" min="0" />
+    <button type="submit">Filter</button>
+</form>
+@if (Model == null || !Model.Any())
+{
+    <p>No tables available.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Seats</th>
+                <th>Location</th>
+                <th>Is Popular</th>
+                <th>Material</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var table in Model)
+            {
+                <tr>
+                    <td>@table.Number</td>
+                    <td>@table.Seats</td>
+                    <td>@table.Location</td>
+                    <td>@table.IsPopular</td>
+                    <td>@table.Material</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@table.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@table.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+}
+<a asp-action="Create" class="btn btn-primary">Create New Table</a>

@@ -1,0 +1,36 @@
+﻿@model RestaurantReservationMVC.Models.ReservationModel
+
+@{
+    ViewData["Title"] = "Create Reservation";
+}
+
+<h2>Create Reservation</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="ReservationDate"></label>
+        <input asp-for="ReservationDate" />
+        <span asp-validation-for="ReservationDate"></span>
+    </div>
+    <div>
+        <label asp-for="NumberOfGuests"></label>
+        <input asp-for="NumberOfGuests" />
+        <span asp-validation-for="NumberOfGuests"></span>
+    </div>
+    <div>
+        <label asp-for="TableId"></label>
+        <input asp-for="TableId" />
+        <span asp-validation-for="TableId"></span>
+    </div>
+    <div>
+        <label asp-for="SpecialRequests"></label>
+        <input asp-for="SpecialRequests" />
+        <span asp-validation-for="SpecialRequests"></span>
+    </div>
+    <div>
+        <label asp-for="VipGuests"></label>
+        <input asp-for="VipGuests" />
+        <span asp-validation-for="VipGuests"></span>
+    </div>
+    <button type="submit">Create</button>
+</form>

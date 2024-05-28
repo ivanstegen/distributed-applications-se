@@ -1,0 +1,52 @@
+﻿@model X.PagedList.IPagedList<RestaurantReservationMVC.Models.ReservationModel>
+@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<h2>Reservations</h2>
+<form method="get" asp-action="Index">
+    <label for="numberOfGuests">Filter by Number of Guests:</label>
+    <input type="number" id="numberOfGuests" name="numberOfGuests" min="0" />
+    <button type="submit">Filter</button>
+</form>
+@if (Model == null || !Model.Any())
+{
+    <p>No reservations available.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NumberOfGuests</th>
+                <th>ReservationDate</th>
+                <th>SpecialRequests</th>
+                <th>TableId</th>
+                <th>VipGuests</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                <tr>
+                    <td>@reservation.Id</td>
+                    <td>@reservation.NumberOfGuests</td>
+                    <td>@reservation.ReservationDate</td>
+                    <td>@reservation.SpecialRequests</td>
+                    <td>@reservation.TableId</td>
+                    <td>@reservation.VipGuests</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@reservation.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@reservation.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+}
+<a asp-action="Create" class="btn btn-primary">Create New Reservation</a>

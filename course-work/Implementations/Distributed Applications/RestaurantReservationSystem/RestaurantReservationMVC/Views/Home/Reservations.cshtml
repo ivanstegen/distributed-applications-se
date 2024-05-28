@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Reservations";
+    var token = ViewData["Token"] as string;
+}
+
+<h2>Your Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Date</th>
+            <th>Number of Guests</th>
+            <th>Table</th>
+            <th>Special Requests</th>
+            <th>VIP Guests</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="reservationTable">
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const token = '@token';
+        const response = await fetch('/api/Reservations', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const reservations = await response.json();
+        const reservationTable = document.getElementById('reservationTable');
+        reservations.forEach(reservation => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                        <td>${reservation.id}</td>
+                        <td>${reservation.date}</td>
+                        <td>${reservation.numberOfGuests}</td>
+                        <td>${reservation.table.number}</td>
+                        <td>${reservation.specialRequests}</td>
+                        <td>${reservation.vipGuests}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                `;
+            reservationTable.appendChild(row);
+        });
+    });
+</script>
